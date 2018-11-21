@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Spawning_of_bawlingballs : MonoBehaviour
 {
-
+    public Text text;
+    public float timeLeft = 30;
     public GameObject bowlingBall;
     public float maxWidth = 1;
     public float StartTime=2;
@@ -41,9 +43,11 @@ public class Spawning_of_bawlingballs : MonoBehaviour
     */
 
     void Update()
-    
+        
         {
-        if (time < 0)
+        if (timeLeft != 0)
+        {
+            if (time < 0)
         {
             Vector3 spawnPosition = new Vector3(Random.Range(-maxWidth, maxWidth), transform.position.y, 0.0f);
             Quaternion spawnRotation = Quaternion.identity;
@@ -53,8 +57,20 @@ public class Spawning_of_bawlingballs : MonoBehaviour
         else
             time = time - Time.deltaTime;
             
-            
+            }
         
 
     }
+
+    void FixedUpdate()
+    {
+        timeLeft = timeLeft - Time.deltaTime;
+        if (timeLeft < 0)
+        { timeLeft = 0; }
+        // Koristi se Mathf.RountToInt kako bi vrijeme bilo bez decimalnih brojeva
+        text.text = "Time Left: \n" + Mathf.RoundToInt(timeLeft);
+    }
+
 }
+
+
